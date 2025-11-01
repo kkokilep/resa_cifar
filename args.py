@@ -24,6 +24,8 @@ def get_args():
     #########################
     parser.add_argument("--dataset", type=str, default="cifar10")
 
+    parser.add_argument("--aug_strength", type=str, default="weak")
+
     parser.add_argument("--loss_type", type=str, default="Resa")
 
     parser.add_argument("--data_path", type=str, default="./data",
@@ -34,6 +36,8 @@ def get_args():
     
     parser.add_argument("--step_epoch", type=int, default=20, nargs="+",
                     help="list of step epochs")
+    
+    
 
     parser.add_argument("--crops_size", type=int, default=[32], nargs="+",
                     help="crops resolutions")

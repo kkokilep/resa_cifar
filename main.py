@@ -156,7 +156,7 @@ def main():
             }
             torch.save(
                 save_dict,
-                os.path.join(args.dump_path, f"checkpoint_{args.loss_type}.pth.tar"),
+                os.path.join(args.dump_path, f"checkpoint_{args.loss_type}_{args.temperature}_{args.arch}_{args.lr_}_{args.crops_nmb}_{args.aug_strength}.pth.tar"),
             )
 
 def train(loader, model, optimizer, epoch, args):

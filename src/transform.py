@@ -71,20 +71,28 @@ class MultiVisionDataset(datasets.VisionDataset):
             self.dataset.data = self.dataset.data[:args.size_dataset]
             self.dataset.targets = self.dataset.targets[:args.size_dataset]
 
-        weak_transform = transforms.Compose([
-            transforms.RandomResizedCrop(args.crops_size[0], scale=(0.2, 1.)),
-            transforms.RandomHorizontalFlip(),
-            transforms.ToTensor(),
-            transforms.Normalize(self.mean, self.std),
-        ])
+        if args.aug_strength == 'weak':
+            weak_transform = transforms.Compose([
+                transforms.RandomResizedCrop(args.crops_size[0], scale=(0.2, 1.)),
+                transforms.RandomHorizontalFlip(),
+                transforms.ToTensor(),
+                transforms.Normalize(self.mean, self.std),
+            ])
 
-        self.return_index = return_index
+            self.return_index = return_index
 
-        trans = [weak_transform]
+            trans = [weak_transform]
 
-        for i in range(len(args.crops_nmb)):
-            trans.extend([VisionTransform(crop_size=args.crops_size[i], solarization_prob=args.solarization_prob[i], 
-                                        mean=self.mean, std=self.std) ] * args.crops_nmb[i])    
+            for i in range(len(args.crops_nmb)):
+                trans.extend([VisionTransform(crop_size=args.crops_size[i], solarization_prob=args.solarization_prob[i], 
+                                            mean=self.mean, std=self.std) ] * args.crops_nmb[i])
+        else:
+            trans = []
+            self.return_index = return_index
+            for i in range(len(args.crops_nmb+1)):
+                trans.append([VisionTransform(crop_size=args.crops_size[i], solarization_prob=args.solarization_prob[i], 
+                                            mean=self.mean, std=self.std) ])
+
 
         self.trans = trans
 
