@@ -89,7 +89,7 @@ class MultiVisionDataset(datasets.VisionDataset):
         else:
             trans = []
             self.return_index = return_index
-            for i in range(len(args.crops_nmb+1)):
+            for i in range(len(args.crops_nmb)+1):
                 trans.append([VisionTransform(crop_size=args.crops_size[i], solarization_prob=args.solarization_prob[i], 
                                             mean=self.mean, std=self.std) ])
 
