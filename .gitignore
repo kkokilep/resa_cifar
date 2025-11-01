@@ -1,0 +1,15 @@
+__pycache__/*
+
+save_model/*
+
+wandb/*
+
+src/__pycache__/*
+
+method/__pycache__/*
+
+eval/__pycache__/*
+
+data/__pycache__/*
+
+data/*
