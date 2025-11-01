@@ -82,17 +82,21 @@ class MultiVisionDataset(datasets.VisionDataset):
             self.return_index = return_index
 
             trans = [weak_transform]
+            print(trans)
 
             for i in range(len(args.crops_nmb)):
-                trans.extend([VisionTransform(crop_size=args.crops_size[i], solarization_prob=args.solarization_prob[i], 
-                                            mean=self.mean, std=self.std) ] * args.crops_nmb[i])
+                trans.extend([VisionTransform(crop_size=args.crops_size[i], solarization_prob=args.solarization_prob[i],
+                                              mean=self.mean, std=self.std)] * args.crops_nmb[i])
+            
+            print(trans)
         else:
             trans = []
             self.return_index = return_index
             for i in range(len(args.crops_nmb)+1):
-                trans.append([VisionTransform(crop_size=args.crops_size[0], solarization_prob=args.solarization_prob[0], 
+                trans.extend([VisionTransform(crop_size=args.crops_size[0], solarization_prob=args.solarization_prob[0], 
                                             mean=self.mean, std=self.std) ])
 
+            print(trans)
 
         self.trans = trans
 
