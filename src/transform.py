@@ -89,6 +89,11 @@ class MultiVisionDataset(datasets.VisionDataset):
                                               mean=self.mean, std=self.std)] * args.crops_nmb[i])
             
             print(trans)
+        elif args.aug_strength == 'asymmetric':
+            trans = []
+            self.return_index = return_index
+            trans.append(VisionTransform(crop_size=args.crops_size[0],min_scale=0.08,gaussian_prob = 1.0, solarization_prob=0.0))
+            trans.append(VisionTransform(crop_size=args.crops_size[0],min_scale=0.08,gaussian_prob = 0.1, solarization_prob=0.2))
         else:
             trans = []
             self.return_index = return_index
