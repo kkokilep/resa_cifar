@@ -1,0 +1,11 @@
+#!/bin/bash
+#SBATCH --time=16:00:00
+#SBATCH --gres=gpu:1
+#SBATCH --nodes=1
+#SBATCH --cpus-per-task=32
+#SBATCH --ntasks 1
+#SBATCH --ntasks-per-node=1
+#SBATCH --signal=INT@5
+
+
+torchrun --nproc_per_node=1 main.py  --dataset cifar10 --workers 32 --env_name 'resa_cifar10_lr_0.3' --dump_path ./save_model/ --step_epoch 20 --loss_type AdaDim --batch_size 256 --lr 0.3

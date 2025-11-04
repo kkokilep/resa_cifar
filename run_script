@@ -1,5 +1,5 @@
 #!/bin/bash
 
 
-torchrun --nproc_per_node=1 main.py  --dataset cifar100 --workers 16 --dump_path ./save_model/ --loss_type AdaDim --batch_size 256 --lr 0.4
+torchrun --nproc_per_node=1 main.py  --dataset cifar10 --workers 16 --env_name 'resa_cifar10_lr_0.4' --dump_path ./save_model/ --step_epoch 20 --loss_type AdaDim --batch_size 256 --lr 0.4
 

@@ -7,7 +7,7 @@ from itertools import chain
 from method.base import BaseMethod
 import torch.nn.functional as F
 import torch.distributed as dist
-
+import wandb
 class AdaDim(BaseMethod):
     # ReSA using the momentum network, better performance
 
@@ -177,7 +177,7 @@ class AdaDim(BaseMethod):
                 self.rank_list = []
                 self.alpha = (mean_rank/(self.args.batch_size*2)).detach().cpu().numpy()
                 self.alpha = torch.tensor(self.alpha).float()
-                #self.log("alpha", self.alpha, on_epoch=True, sync_dist=True)
+                wandb.log({"alpha": self.alpha})
                 self.rank = mean_rank
         else:
             self.alpha = self.alpha

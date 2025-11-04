@@ -34,7 +34,7 @@ def get_args():
     parser.add_argument("--crops_nmb", type=int, default=[1], nargs="+",
                     help="list of number of crops")
     
-    parser.add_argument("--step_epoch", type=int, default=20, nargs="+",
+    parser.add_argument("--step_epoch", type=int, default=20,
                     help="list of step epochs")
     
     
@@ -119,7 +119,7 @@ def get_args():
                     help="embedding size")
 
     parser.add_argument(
-        "--eval_every", type=int, default=5, help="how often to evaluate"
+        "--eval_every", type=int, default=50, help="how often to evaluate"
     )
 
     return parser.parse_args()
