@@ -10,7 +10,7 @@ import torch
 import torch.nn as nn
 import torch.backends.cudnn as cudnn
 from args import get_args
-from src.transform import MultiVisionDataset
+from src.transform import MultiVisionDataset, MultiNoiseVisionDataset
 from method import get_method
 from eval.evaluate import get_acc
 from eval.dataloader import get_clf
@@ -56,13 +56,24 @@ def main():
         logging.info = log_pass
 
     # build data
-    train_dataset = MultiVisionDataset(
-        args.data_path,
-        args,
-        dataset_type=args.dataset,
-        download=True,
-        return_index=False,
-    )
+    if "noise" in args.dataset:
+        train_dataset = MultiNoiseVisionDataset(
+            args.data_path,
+            args,
+            dataset_type=args.dataset,
+            download=True,
+            return_index=False,
+            noise=args.noise_percentage,
+            noise_std=args.noise_std,
+        )
+    else:
+        train_dataset = MultiVisionDataset(
+            args.data_path,
+            args,
+            dataset_type=args.dataset,
+            download=True,
+            return_index=False,
+        )
     ds = get_clf(args)
 
     sampler = torch.utils.data.distributed.DistributedSampler(train_dataset)
@@ -74,6 +85,7 @@ def main():
         pin_memory=True,
         drop_last=True
     )
+    print(len(train_loader))
 
     logging.info("Building data done with {} images loaded.".format(len(train_dataset)))
 
@@ -170,7 +182,6 @@ def train(loader, model, optimizer, epoch, args):
     for it, samples in enumerate(loader):
         # measure data loading time
         data_time.update(time.time() - end)
-
         # update parameters
         iters = len(loader) * epoch + it  # global training iteration
         adjust_parameters(model, optimizer, args, iters)

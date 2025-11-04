@@ -77,6 +77,12 @@ def get_args():
     
     parser.add_argument('--gamma', default=1e-4, type=float, 
                     help='initial (base) learning rate for train')
+    
+    parser.add_argument('--noise_percentage', default=0.2, type=float, 
+                    help='percentage of noise to add to the images')
+
+    parser.add_argument('--noise_std', default=0.2, type=float, 
+                    help='standard deviation of noise to add to the images')
 
     parser.add_argument('--wd', default=1e-4, type=float, 
                     help='weight decay (default: 1e-4)')

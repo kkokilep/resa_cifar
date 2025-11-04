@@ -90,7 +90,7 @@ class CIFAR100_clf(BaseDataset):
 
 
 def get_clf(args):
-    if args.dataset == 'cifar10':
+    if args.dataset == 'cifar10' or args.dataset == 'cifar10_noise':
         return CIFAR10_clf(args)
-    elif args.dataset == 'cifar100':
+    elif args.dataset == 'cifar100' or args.dataset == 'cifar100_noise':
         return CIFAR100_clf(args)

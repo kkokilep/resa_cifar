@@ -7,6 +7,8 @@ import torchvision.transforms as transforms
 import torch
 import numpy as np
 import torchvision.datasets as datasets
+from torch.utils.data import Dataset
+import random
 
 class GaussianBlur(object):
     """Gaussian blur augmentation in SimCLR https://arxiv.org/abs/2002.05709"""
@@ -124,6 +126,101 @@ class MultiVisionDataset(datasets.VisionDataset):
     def __len__(self):
         # Return the number of samples in the dataset
         return len(self.dataset.data)
+    
+
+
+class MultiNoiseVisionDataset(Dataset):
+    def __init__(
+        self,
+        data_path,
+        args,
+        dataset_type='cifar10',  # CIFAR10 or CIFAR100 or STL10
+        download=True,
+        return_index=False,
+        noise=0.2,
+        noise_std=0.2,
+    ):
+        # Load the appropriate dataset
+        if dataset_type == 'cifar10_noise':
+            self.dataset = datasets.CIFAR10(data_path, train=True, download=download)
+            self.mean, self.std = (0.4914, 0.4822, 0.4465), (0.2470, 0.2435, 0.2616)
+        elif dataset_type == 'cifar100_noise':
+            self.dataset = datasets.CIFAR100(data_path, train=True, download=download)
+            self.mean, self.std = (0.5071, 0.4865, 0.4409), (0.2673, 0.2564, 0.2762)
+        elif dataset_type == 'stl10_noise':
+            self.dataset = datasets.STL10(data_path, split="train+unlabeled", download=download)
+            self.mean, self.std = (0.43, 0.42, 0.39), (0.27, 0.26, 0.27)
+        else:
+            raise ValueError("Invalid dataset type.")
+        
+        self.dataset_type = dataset_type
+        self.noise_transform = transforms.GaussianBlur(kernel_size = 3, sigma=[noise_std, noise_std])  
+        num_noisy = int(noise * len(self.dataset.data))
+        self.noisy_indices = set(random.sample(range(len(self.dataset.data)), num_noisy))
+
+        # Limit the dataset size if specified
+        if args.size_dataset >= 0:
+            self.dataset.data = self.dataset.data[:args.size_dataset]
+            self.dataset.targets = self.dataset.targets[:args.size_dataset]
+
+        if args.aug_strength == 'weak':
+            weak_transform = transforms.Compose([
+                transforms.RandomResizedCrop(args.crops_size[0], scale=(0.2, 1.)),
+                transforms.RandomHorizontalFlip(),
+                transforms.ToTensor(),
+                transforms.Normalize(self.mean, self.std),
+            ])
+
+            self.return_index = return_index
+
+            trans = [weak_transform]
+            print(trans)
+
+            for i in range(len(args.crops_nmb)):
+                trans.extend([VisionTransform(crop_size=args.crops_size[i], solarization_prob=args.solarization_prob[i],
+                                              mean=self.mean, std=self.std)] * args.crops_nmb[i])
+            
+            print(trans)
+        elif args.aug_strength == 'asymmetric':
+            trans = []
+            self.return_index = return_index
+            trans.append(VisionTransform(crop_size=args.crops_size[0],min_scale=0.08,gaussian_prob = 1.0, solarization_prob=0.0))
+            trans.append(VisionTransform(crop_size=args.crops_size[0],min_scale=0.08,gaussian_prob = 0.1, solarization_prob=0.2))
+        else:
+            trans = []
+            self.return_index = return_index
+            for i in range(len(args.crops_nmb)+1):
+                trans.extend([VisionTransform(crop_size=args.crops_size[0], solarization_prob=args.solarization_prob[0], 
+                                            mean=self.mean, std=self.std) ])
+
+            print(trans)
+
+        self.trans = trans
+
+    def __getitem__(self, index):
+        # Fetch the image and target from the dataset
+        image = self.dataset.data[index]
+        
+        if self.dataset_type == 'stl10':
+            image = Image.fromarray(np.transpose(image, (1, 2, 0)))
+        else:
+            image = Image.fromarray(image)
+        
+        if index in self.noisy_indices:
+            # Apply additional noise transform if it's a noisy image
+            image = self.noise_transform(image)
+
+        # Apply the transformations
+        crops = list(map(lambda trans: trans(image), self.trans))
+
+        if self.return_index:
+            return index, crops
+        return crops
+    
+    def __len__(self):
+        # Return the number of samples in the dataset
+        return len(self.dataset.data)
+
 
 class VisionTransform(BaseTransform):
     def __init__(
