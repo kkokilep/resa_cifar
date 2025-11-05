@@ -9,7 +9,6 @@ import numpy as np
 import torchvision.datasets as datasets
 from torch.utils.data import Dataset
 import random
-from corruptions import gaussian_noise
 
 class GaussianBlur(object):
     """Gaussian blur augmentation in SimCLR https://arxiv.org/abs/2002.05709"""
