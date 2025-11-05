@@ -128,7 +128,7 @@ def main():
     to_restore = {"epoch": 0}
     if "checkpoint" in args.dump_path:
         restart_from_checkpoint(
-            os.path.join(args.dump_path, "checkpoint.pth.tar"),
+            os.path.join(args.dump_path),
             run_variables=to_restore,
             state_dict=model,
             optimizer=optimizer,
@@ -168,7 +168,7 @@ def main():
             }
             torch.save(
                 save_dict,
-                os.path.join(args.dump_path, f"checkpoint_{args.loss_type}_{args.temperature}_{args.arch}_{args.lr}_{args.crops_nmb[0]}_{args.aug_strength}_{args.gamma}.pth.tar"),
+                os.path.join(args.dump_path, f"checkpoint__{args.dataset}_{args.loss_type}_{args.temperature}_{args.arch}_{args.lr}_{args.crops_nmb[0]}_{args.aug_strength}_{args.gamma}.pth.tar"),
             )
 
 def train(loader, model, optimizer, epoch, args):

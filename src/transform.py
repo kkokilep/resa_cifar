@@ -9,6 +9,7 @@ import numpy as np
 import torchvision.datasets as datasets
 from torch.utils.data import Dataset
 import random
+from corruptions import gaussian_noise
 
 class GaussianBlur(object):
     """Gaussian blur augmentation in SimCLR https://arxiv.org/abs/2002.05709"""
@@ -139,6 +140,7 @@ class MultiNoiseVisionDataset(Dataset):
         return_index=False,
         noise=0.2,
         noise_std=0.2,
+        severity = 0
     ):
         # Load the appropriate dataset
         if dataset_type == 'cifar10_noise':
@@ -154,7 +156,9 @@ class MultiNoiseVisionDataset(Dataset):
             raise ValueError("Invalid dataset type.")
         
         self.dataset_type = dataset_type
-        self.noise_transform = transforms.GaussianBlur(kernel_size = 3, sigma=[noise_std, noise_std])  
+        if args.noise_type == 'gaussian':
+            self.noise_transform = transforms.GaussianBlur(kernel_size = 3, sigma=[noise_std, noise_std])
+         
         num_noisy = int(noise * len(self.dataset.data))
         self.noisy_indices = set(random.sample(range(len(self.dataset.data)), num_noisy))
 

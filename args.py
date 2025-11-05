@@ -84,6 +84,9 @@ def get_args():
     parser.add_argument('--noise_std', default=0.2, type=float, 
                     help='standard deviation of noise to add to the images')
 
+    parser.add_argument('--noise_type', default='gaussian', type=str, 
+                    help='type of noise to add to the images')
+
     parser.add_argument('--wd', default=1e-4, type=float, 
                     help='weight decay (default: 1e-4)')
 

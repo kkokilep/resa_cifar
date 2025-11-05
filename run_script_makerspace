@@ -8,12 +8,9 @@
 #SBATCH --signal=INT@5
 
 
-torchrun --nproc_per_node=1 main.py  --dataset cifar10 --workers 32 --env_name 'resa_cifar10_lr_0.3' --dump_path ./save_model/ --step_epoch 20 --loss_type AdaDim --batch_size 256 --lr 0.3
+torchrun --nproc_per_node=1 main.py  --dataset cifar10 --workers 32 --env_name 'resa_cifar10_lr_0.4_gamma_1e-3' --dump_path ./save_model/checkpoint_AdaDim_0.4_resnet18_0.3_1_weak_0.0001.pth.tar --step_epoch 20 --loss_type AdaDim --batch_size 256 --lr 0.4 --gamma 1e-3 --alpha .43845
 
-
-torchrun --nproc_per_node=1 main.py  --dataset cifar10 --workers 32 --env_name 'resa_cifar10_lr_0.4_gamma_1e-3' --dump_path ./save_model/ --step_epoch 20 --loss_type AdaDim --batch_size 256 --lr 0.4 --gamma 1e-3
-
-
+checkpoint_AdaDim_0.4_resnet18_0.3_1_weak_0.0001.pth.tar
 torchrun --nproc_per_node=1 main.py  --dataset cifar10 --workers 32 --env_name 'resa_cifar10_lr_0.4_gamma_1e-2' --dump_path ./save_model/ --step_epoch 20 --loss_type AdaDim --batch_size 256 --lr 0.4 --gamma 1e-2
 
 
