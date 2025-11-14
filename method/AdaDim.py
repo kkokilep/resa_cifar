@@ -185,6 +185,7 @@ class AdaDim(BaseMethod):
 
         beta = self.gamma * self.alpha
         # Compute SimCLR loss
+        
         for q in range(len(emb)):
             for v in range(len(emb_m)):
                 if v == q:
@@ -192,6 +193,7 @@ class AdaDim(BaseMethod):
                 emb_sim = (self.alpha) * self.simclr_loss(emb[q],emb_m[v],self.args.batch_size,self.temp)
                 total_loss += emb_sim
                 n_loss_terms += 1
+        
         # Compute VICReg loss
         for q in range(len(z)):
             for v in range(len(z_m)):
@@ -224,9 +226,9 @@ class AdaDim(BaseMethod):
                 total_matrix_terms += 1
 
         matrix_loss = total_matrix_loss / total_matrix_terms
+
         AdaDim_loss = (1-beta) * ssl_loss - beta * matrix_loss
         
-
         return AdaDim_loss
 
 
