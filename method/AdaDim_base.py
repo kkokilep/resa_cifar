@@ -14,13 +14,13 @@ class AdaDim_Base(BaseMethod):
     def __init__(self, args):
         super().__init__(args)
 
-        self.momentum_encoder = copy.deepcopy(self.encoder)
-        self.momentum_projector = copy.deepcopy(self.projector)
-        
+        #self.momentum_encoder = copy.deepcopy(self.encoder)
+        #self.momentum_projector = copy.deepcopy(self.projector)
+        '''
         for param in chain(self.momentum_encoder.parameters(), 
                            self.momentum_projector.parameters()):
             param.requires_grad = False
-
+        '''
         self.temp = args.temperature
         self.alpha = args.alpha
         self.gamma = args.gamma
@@ -186,6 +186,7 @@ class AdaDim_Base(BaseMethod):
         beta = self.gamma * self.alpha
         # Compute SimCLR loss
         
+        
         for q in range(len(emb)):
             for v in range(len(emb)):
                 if v == q:
@@ -193,7 +194,6 @@ class AdaDim_Base(BaseMethod):
                 emb_sim = (self.alpha) * self.simclr_loss(emb[q],emb[v],self.args.batch_size,self.temp)
                 total_loss += emb_sim
                 n_loss_terms += 1
-        
         # Compute VICReg loss
         for q in range(len(z)):
             for v in range(len(z)):
@@ -216,13 +216,11 @@ class AdaDim_Base(BaseMethod):
                 emb_sim = self.mutual_info_loss(h[q],z[v])
                 total_matrix_loss += emb_sim
                 total_matrix_terms += 1
-        
-        
 
         matrix_loss = total_matrix_loss / total_matrix_terms
-
         AdaDim_loss = (1-beta) * ssl_loss - beta * matrix_loss
         
+
         return AdaDim_loss
 
 

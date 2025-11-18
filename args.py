@@ -30,6 +30,10 @@ def get_args():
 
     parser.add_argument("--data_path", type=str, default="./data",
                     help="path to dataset repository")
+    parser.add_argument("--data_path_train", type=str, default="./data",
+                    help="path to dataset repository")
+    parser.add_argument("--data_path_test", type=str, default="./data",
+                    help="path to dataset repository")
 
     parser.add_argument("--crops_nmb", type=int, default=[1], nargs="+",
                     help="list of number of crops")
@@ -86,6 +90,9 @@ def get_args():
 
     parser.add_argument('--noise_type', default='gaussian', type=str, 
                     help='type of noise to add to the images')
+    
+    parser.add_argument('--noise_percent', default=5, type=float, 
+                    help='percentage of images to add noise to')
 
     parser.add_argument('--wd', default=1e-4, type=float, 
                     help='weight decay (default: 1e-4)')
@@ -128,7 +135,7 @@ def get_args():
                     help="embedding size")
 
     parser.add_argument(
-        "--eval_every", type=int, default=50, help="how often to evaluate"
+        "--eval_every", type=int, default=5, help="how often to evaluate"
     )
 
     return parser.parse_args()

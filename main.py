@@ -10,7 +10,7 @@ import torch
 import torch.nn as nn
 import torch.backends.cudnn as cudnn
 from args import get_args
-from src.transform import MultiVisionDataset, MultiNoiseVisionDataset
+from src.transform import MultiVisionDataset
 from method import get_method
 from eval.evaluate import get_acc
 from eval.dataloader import get_clf
@@ -56,18 +56,9 @@ def main():
         logging.info = log_pass
 
     # build data
-    if "noise" in args.dataset:
-        train_dataset = MultiNoiseVisionDataset(
-            args.data_path,
-            args,
-            dataset_type=args.dataset,
-            download=True,
-            return_index=False,
-            noise=args.noise_percentage,
-            noise_std=args.noise_std,
-        )
-    else:
-        train_dataset = MultiVisionDataset(
+    
+    
+    train_dataset = MultiVisionDataset(
             args.data_path,
             args,
             dataset_type=args.dataset,

@@ -1,4 +1,4 @@
 #!/bin/bash
 
 
-torchrun --nproc_per_node=1 main.py  --dataset cifar100 --workers 16 --dump_path ./save_model/ --loss_type AdaDim --batch_size 256 --aug_strength 'asymmetric'
+torchrun --nproc_per_node=1 --master_port=12345 main.py --arch 'resnet50'  --dataset bloodmnist --data_path '/data/MedMNIST/.medmnist/' --data_path_train '/data/MedMNIST/.medmnist/' --data_path_test '/data/MedMNIST/.medmnist/' --workers 16 --env_name 'Resa_bloodmnist' --dump_path ./save_model/ --loss_type Resa --batch_size 256 --epochs 400 
