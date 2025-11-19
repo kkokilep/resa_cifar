@@ -95,7 +95,7 @@ def main():
     logging.info("Building model done.")
 
     # build optimizer
-    args.lr = args.lr #* args.batch_size * args.world_size / 256
+    args.lr = args.lr * args.batch_size * args.world_size / 256
 
     # ============ init schedulers ... ============
     args.lr_schedule = cosine_scheduler(
