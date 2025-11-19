@@ -135,7 +135,7 @@ def get_args():
                     help="embedding size")
 
     parser.add_argument(
-        "--eval_every", type=int, default=5, help="how often to evaluate"
+        "--eval_every", type=int, default=50, help="how often to evaluate"
     )
 
     return parser.parse_args()
