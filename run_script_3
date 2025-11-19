@@ -1,5 +1,12 @@
 #!/bin/bash
 
 
-torchrun --nproc_per_node=1 --master_port 12345 main.py --dataset cifar100 --workers 16 --dump_path ./save_model/ --loss_type AdaDim --batch_size 256 --gamma 1e-3
+torchrun --nproc_per_node=1 --master_port=12335 main.py --arch 'resnet50'  --dataset organsmnist --data_path '/data/MedMNIST/.medmnist/' --data_path_train '/data/MedMNIST/.medmnist/' --data_path_test '/data/MedMNIST/.medmnist/' --workers 16 --env_name 'AdaDim_organsmnist_temp_0.1' --dump_path ./save_model/ --loss_type AdaDim --batch_size 256 --lr 0.4 --epochs 400 --temperature 0.1
 
+
+torchrun --nproc_per_node=1 --master_port=12332 main.py --arch 'resnet50'  --dataset organcmnist --data_path '/data/MedMNIST/.medmnist/' --data_path_train '/data/MedMNIST/.medmnist/' --data_path_test '/data/MedMNIST/.medmnist/' --workers 16 --env_name 'AdaDim_organcmnist_temp_0.1' --dump_path ./save_model/ --loss_type AdaDim --batch_size 256 --lr 0.4 --epochs 400 --temperature 0.1
+
+torchrun --nproc_per_node=1 --master_port=12331 main.py --arch 'resnet50'  --dataset organamnist --data_path '/data/MedMNIST/.medmnist/' --data_path_train '/data/MedMNIST/.medmnist/' --data_path_test '/data/MedMNIST/.medmnist/' --workers 16 --env_name 'AdaDim_organamnist_temp_0.1' --dump_path ./save_model/ --loss_type AdaDim --batch_size 256 --lr 0.4 --epochs 400 --temperature 0.1
+
+
+torchrun --nproc_per_node=1 --master_port=16335 main.py --arch 'resnet50'  --dataset cifar100 --data_path './data/' --data_path_train './data/' --data_path_test './data/' --workers 16 --env_name 'AdaDim_bloodmnist_temp_0.1' --dump_path ./save_model/ --loss_type AdaDim --batch_size 256 --lr 0.4 --epochs 400 --temperature 0.1

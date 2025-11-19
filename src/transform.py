@@ -154,6 +154,7 @@ class MultiVisionDataset(datasets.VisionDataset):
         elif args.aug_strength == 'weak' and 'organ' in args.dataset:
             weak_transform = transforms.Compose([
                 transforms.RandomResizedCrop(32, scale=(0.2, 1.)),
+                transforms.Grayscale(num_output_channels=3),
                 transforms.RandomHorizontalFlip(),
                 transforms.ToTensor(),
                 transforms.Normalize(self.mean, self.std),
@@ -165,7 +166,7 @@ class MultiVisionDataset(datasets.VisionDataset):
             
 
             for i in range(len(args.crops_nmb)):
-                trans.extend([VisionTransform(crop_size=32, solarization_prob=args.solarization_prob[i],
+                trans.extend([VisionTransformGray(crop_size=32, solarization_prob=args.solarization_prob[i],
                                               mean=self.mean, std=self.std)] * args.crops_nmb[i])
         
         elif args.aug_strength == 'asymmetric':
@@ -186,7 +187,7 @@ class MultiVisionDataset(datasets.VisionDataset):
 
     def __getitem__(self, index):
         # Fetch the image and target from the dataset
-        if self.dataset_type == 'bloodmnist':
+        if 'mnist' in self.dataset_type:
             image = self.dataset.imgs[index]
         elif 'noise' in self.dataset_type:
             image = self.dataset.samples[index][0]
@@ -208,7 +209,7 @@ class MultiVisionDataset(datasets.VisionDataset):
         return crops
     
     def __len__(self):
-        if self.dataset_type == 'bloodmnist':
+        if 'mnist' in self.dataset_type:
             return len(self.dataset.imgs)
         elif 'noise' in self.dataset_type:
             return len(self.dataset.samples)

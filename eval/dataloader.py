@@ -119,6 +119,7 @@ class BloodMNIST_clf(BaseDataset):
 class OrganAMNIST_clf(BaseDataset):
     def base_transform(self):
         return transforms.Compose([
+            transforms.Grayscale(num_output_channels=3),
             transforms.ToTensor(), 
             transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))]
     )
@@ -137,6 +138,7 @@ class OrganAMNIST_clf(BaseDataset):
 class OrganSMNIST_clf(BaseDataset):
     def base_transform(self):
         return transforms.Compose([
+            transforms.Grayscale(num_output_channels=3),
             transforms.ToTensor(), 
             transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))]
     )
@@ -156,6 +158,7 @@ class OrganSMNIST_clf(BaseDataset):
 class OrganCMNIST_clf(BaseDataset):
     def base_transform(self):
         return transforms.Compose([
+            transforms.Grayscale(num_output_channels=3),
             transforms.ToTensor(), 
             transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))]
     )
