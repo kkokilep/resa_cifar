@@ -11,7 +11,4 @@
 #torchrun --nproc_per_node=1 --master_port=12345 main.py --arch 'resnet18'  --dataset cifar100 --data_path './data' --data_path_test './data' --workers 32 --env_name 'AdaDim_cifar100_1e-4_temp_0.1_proj_3072' --dump_path ./save_model/ --loss_type AdaDim --batch_size 256 --lr 0.4  --gamma 1e-4 --temperature 0.1 --mlp_dim 3072
 
 
-torchrun --nproc_per_node=1 --master_port=17364 main.py --arch 'resnet18'  --dataset cifar100 --data_path './data' --data_path_test './data' --workers 32 --env_name 'AdaDim_cifar100_1e-4_temp_0.1_proj_4096' --dump_path ./save_model/ --loss_type AdaDim --batch_size 256 --lr 0.4  --gamma 1e-4 --temperature 0.1 --mlp_dim 4096
-
-
-#torchrun --nproc_per_node=1 --master_port=17326 main.py --arch 'resnet18'  --dataset cifar100 --data_path './data' --data_path_test './data' --workers 32 --env_name 'AdaDim_cifar100_1e-4_temp_0.1_proj_5120' --dump_path ./save_model/ --loss_type AdasDim --batch_size 256 --lr 0.4  --gamma 1e-4 --temperature 0.1 --mlp_dim 5120
+torchrun --nproc_per_node=1 --master_port=12346 main.py --arch 'resnet18'  --dataset cifar100 --data_path './data' --data_path_test './data' --workers 32 --env_name 'AdaDim_cifar100_1e-3_temp_0.1_bs_256' --dump_path ./save_model/ --loss_type AdaDim --batch_size 256 --lr 0.4  --gamma 1e-3 --temperature 0.1

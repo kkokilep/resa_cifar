@@ -213,7 +213,7 @@ class AdaDim(BaseMethod):
             for v in range(len(z)):
                 if v == q:
                     continue
-                emb_sim = self.mutual_info_loss(h[q],z[v])
+                emb_sim = self.mutual_info_loss(h[q],z[v],alpha=self.args.renyi_order)
                 total_matrix_loss += emb_sim
                 total_matrix_terms += 1
         
@@ -221,7 +221,7 @@ class AdaDim(BaseMethod):
             for v in range(len(z)):
                 if v == q:
                     continue
-                emb_sim = self.mutual_info_loss(h_m[q],z_m[v])
+                emb_sim = self.mutual_info_loss(h_m[q],z_m[v],alpha=self.args.renyi_order)
                 total_matrix_loss += emb_sim
                 total_matrix_terms += 1
 

@@ -133,6 +133,9 @@ def get_args():
 
     parser.add_argument("--emb", type=int, default=512, 
                     help="embedding size")
+    
+    parser.add_argument("--renyi_order", type=int, default=2, 
+                    help="order of Renyi entropy")
 
     parser.add_argument(
         "--eval_every", type=int, default=50, help="how often to evaluate"
