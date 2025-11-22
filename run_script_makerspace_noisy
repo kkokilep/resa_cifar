@@ -14,4 +14,4 @@
 
 #torchrun --nproc_per_node=1 main.py  --dataset cifar100_noise --workers 32 --env_name 'Resa_cifar100_noise_lr_0.4_20_percent' --dump_path ./save_model/ --step_epoch 20 --loss_type Resa --batch_size 256 --lr 0.4 --noise_percentage 0.2 --noise_std 0.5
 
-torchrun --nproc_per_node=1 --master_port=12346 main.py --arch 'resnet18'  --dataset cifar100 --data_path './data' --data_path_test './data' --workers 32 --env_name 'AdaDim_cifar100_1e-4_temp_0.1_bs_256_reny_1' --dump_path ./save_model/ --loss_type AdaDim --batch_size 256 --lr 0.4  --gamma 1e-4 --temperature 0.1 --renyi_order 3
+torchrun --nproc_per_node=1 --master_port=22346 main.py --arch 'resnet18'  --dataset cifar100 --data_path './data' --data_path_test './data' --workers 32 --env_name 'AdaDim_cifar100_1e-4_temp_0.1_bs_256_reny_1' --dump_path ./save_model/ --loss_type AdaDim --batch_size 256 --lr 0.4  --gamma 1e-4 --temperature 0.1 --renyi_order 3
