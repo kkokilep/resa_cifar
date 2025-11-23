@@ -175,7 +175,8 @@ class AdaDim(BaseMethod):
             elif(it == 11):
                 mean_rank = torch.mean(torch.stack(self.rank_list))
                 self.rank_list = []
-                self.alpha = (mean_rank/(self.args.batch_size*2)).detach().cpu().numpy()
+                min_dim = min(z[0].shape[0], z[0].shape[1])
+                self.alpha = (mean_rank/(min_dim*2)).detach().cpu().numpy()
                 self.alpha = torch.tensor(self.alpha).float()
                 wandb.log({"alpha": self.alpha})
                 self.rank = mean_rank
