@@ -178,12 +178,11 @@ class AdaDim(BaseMethod):
                 min_dim = min(z[0].shape[0], z[0].shape[1])
                 self.alpha = (mean_rank/(min_dim*2)).detach().cpu().numpy()
                 self.alpha = torch.tensor(self.alpha).float()
-                wandb.log({"alpha": self.alpha})
                 self.rank = mean_rank
         else:
             self.alpha = self.alpha
 
-
+        wandb.log({"alpha": self.alpha})
         beta = self.gamma * self.alpha
         # Compute SimCLR loss
         
