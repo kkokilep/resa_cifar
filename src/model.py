@@ -28,7 +28,7 @@ def get_encoder(args):
     encoder, out_size = resnet.__dict__[args.arch](
             zero_init_residual=(args.arch != 'resnet18'))
     
-    if 'cifar' in args.dataset or 'mnist' in args.dataset:
+    if 'cifar' in args.dataset or 'mnist' in args.dataset or 'cinic' in args.dataset:
         encoder.conv1 = nn.Conv2d(3, 64, kernel_size=3, stride=1, padding=1, bias=False)
         encoder.maxpool = nn.Identity()
                 
