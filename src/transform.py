@@ -191,7 +191,7 @@ class MultiVisionDataset(datasets.VisionDataset):
         # Fetch the image and target from the dataset
         if 'mnist' in self.dataset_type:
             image = self.dataset.imgs[index]
-        elif 'noise' in self.dataset_type:
+        elif 'noise' in self.dataset_type or 'cinic' in self.dataset_type or 'tinyimagenet' in self.dataset_type:
             image = self.dataset.samples[index][0]
         else:
             image = self.dataset.data[index]
