@@ -88,10 +88,12 @@ class MultiVisionDataset(datasets.VisionDataset):
         elif dataset_type == 'cifar100_noise_5_percent':
             self.dataset = datasets.ImageFolder(data_path, transform=None)
             self.mean, self.std = (0.485, 0.456, 0.406), (0.229, 0.224, 0.225)
-            
+        elif dataset_type == 'cinic10':
+            self.dataset = datasets.ImageFolder(data_path, transform=None)
+            self.mean, self.std = (0.485, 0.456, 0.406), (0.229, 0.224, 0.225)
         elif dataset_type == 'stl10':
-            self.dataset = datasets.STL10(data_path, split="train+unlabeled", download=download)
-            self.mean, self.std = (0.43, 0.42, 0.39), (0.27, 0.26, 0.27)
+            self.dataset = datasets.STL10(data_path, split="train+unlabeled", download=download,transform=None)
+            self.mean, self.std = (0.4914, 0.4822, 0.4465), (0.2470, 0.2435, 0.2616)
         else:
             raise ValueError("Invalid dataset type.")
         
@@ -102,7 +104,7 @@ class MultiVisionDataset(datasets.VisionDataset):
             self.dataset.data = self.dataset.data[:args.size_dataset]
             self.dataset.targets = self.dataset.targets[:args.size_dataset]
 
-        if args.aug_strength == 'weak' and args.dataset == 'cifar10' or args.dataset == 'cifar100' or args.dataset == 'bloodmnist':
+        if args.aug_strength == 'weak' and args.dataset == 'cifar10' or args.dataset == 'cifar100' or args.dataset == 'bloodmnist' or args.dataset == 'cinic10':
             weak_transform = transforms.Compose([
                 transforms.RandomResizedCrop(32, scale=(0.2, 1.)),
                 transforms.RandomHorizontalFlip(),
@@ -213,9 +215,10 @@ class MultiVisionDataset(datasets.VisionDataset):
             return len(self.dataset.imgs)
         elif 'noise' in self.dataset_type:
             return len(self.dataset.samples)
-        else:
-        # Return the number of samples in the dataset
+        elif 'cifar' in self.dataset_type or 'stl10' in self.dataset_type:
             return len(self.dataset.data)
+        else:
+            return len(self.dataset.samples)
     
 
 

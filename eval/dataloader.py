@@ -97,6 +97,42 @@ class TinyImageNet200_clf(BaseDataset):
         return datasets.ImageFolder(root=self.data_path_test, transform=self.base_transform())
     
 
+class STL10_clf(BaseDataset):
+    def base_transform(self):
+        return transforms.Compose([
+            transforms.ToTensor(), 
+            transforms.Normalize((0.4914, 0.4822, 0.4465), (0.247, 0.243, 0.261))]
+    )
+    def ds_clf(self):
+        return datasets.STL10(
+            self.data_path_train,
+            split="train",
+            download=True,
+            transform=self.base_transform(),
+        )
+
+    def ds_test(self):
+        return datasets.STL10(
+            self.data_path_test,
+            split="test",
+            download=True,
+            transform=self.base_transform(),
+        )
+    
+
+class Cinic10_clf(BaseDataset):
+    def base_transform(self):
+        return transforms.Compose([
+            transforms.ToTensor(), 
+            transforms.Normalize((0.4914, 0.4822, 0.4465), (0.247, 0.243, 0.261))]
+    )
+    def ds_clf(self):
+        return datasets.ImageFolder(root=self.data_path_train, transform=self.base_transform())
+
+    def ds_test(self):
+        return datasets.ImageFolder(root=self.data_path_test, transform=self.base_transform())
+    
+
 class BloodMNIST_clf(BaseDataset):
     def base_transform(self):
         return transforms.Compose([
@@ -205,6 +241,10 @@ def get_clf(args):
         return CIFAR10_clf(args)
     elif args.dataset == 'tinyimagenet200':
         return TinyImageNet200_clf(args)
+    elif args.dataset == 'stl10':
+        return STL10_clf(args)
+    elif args.dataset == 'cinic10':
+        return Cinic10_clf(args)
     elif 'noise' in args.dataset:
         return CIFAR100Noise_clf(args)
     elif args.dataset == 'bloodmnist':
