@@ -198,7 +198,7 @@ class MultiVisionDataset(datasets.VisionDataset):
         
         if self.dataset_type == 'stl10':
             image = Image.fromarray(np.transpose(image, (1, 2, 0)))
-        elif 'noise' in self.dataset_type:
+        elif 'noise' in self.dataset_type or 'cinic' in self.dataset_type or 'tinyimagenet' in self.dataset_type:
             image = Image.open(image).convert('RGB')
         else:
             image = Image.fromarray(image)
