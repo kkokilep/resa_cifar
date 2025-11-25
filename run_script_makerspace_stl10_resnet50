@@ -8,11 +8,4 @@
 #SBATCH --signal=INT@5
 
 
-#torchrun --nproc_per_node=1 --master_port=12345 main.py --arch 'resnet18'  --dataset cifar10 --data_path './data' --data_path_test './data' --workers 32 --env_name 'AdaDim_cifar10_1e-4_temp_0.1' --dump_path ./save_model/ --loss_type AdaDim --batch_size 256 --lr 0.4  --gamma 1e-4 --temperature 0.1
-
-
-#torchrun --nproc_per_node=1 --master_port=12344 main.py --arch 'resnet18'  --dataset cifar100 --data_path './data' --data_path_test './data' --workers 32 --env_name 'AdaDim_cifar100_1e-4_temp_0.2' --dump_path ./save_model/ --loss_type AdaDim --batch_size 256 --lr 0.4  --gamma 1e-4 --temperature 0.1
-
-
-
-torchrun --nproc_per_node=1 --master_port=18346 main.py --arch 'resnet18'  --dataset cifar100 --data_path './data' --data_path_test './data' --workers 32 --env_name 'AdaDim_cifar100_1e-4_temp_0.1_output_proj_2048' --dump_path ./save_model/ --loss_type AdaDim --batch_size 256 --lr 0.4  --gamma 1e-4 --temperature 0.1 --emb 2048
+torchrun --nproc_per_node=1 --master_port=13311 main.py --arch 'resnet50'  --dataset stl10 --data_path '/storage/ice1/shared/d-pace_community/makerspace-datasets/IMAGE/stl10/' --data_path_train '/storage/ice1/shared/d-pace_community/makerspace-datasets/IMAGE/stl10/' --data_path_test '/storage/ice1/shared/d-pace_community/makerspace-datasets/IMAGE/stl10/' --workers 32 --env_name 'AdaDim_stl10_1e-4_temp_0.1_output_proj_512_resnet50' --dump_path ./save_model/ --loss_type AdaDim --batch_size 256 --lr 0.4  --gamma 1e-4 --temperature 0.1 --emb 512

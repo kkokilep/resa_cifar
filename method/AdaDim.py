@@ -177,7 +177,7 @@ class AdaDim(BaseMethod):
                 self.rank_list = []
                 min_dim = min(z[0].shape[0], z[0].shape[1])
                 if (2 * z[0].shape[0]) <= z[0].shape[1]:
-                    min_dim = 2 *z[0].shape[0]
+                    min_dim = 2 * z[0].shape[0]
                 else:
                     min_dim = z[0].shape[1]
                 self.alpha = (mean_rank/(min_dim)).detach().cpu().numpy()
