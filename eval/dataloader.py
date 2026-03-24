@@ -142,13 +142,13 @@ class BloodMNIST_clf(BaseDataset):
     def ds_clf(self):
         info = INFO['bloodmnist']
         DataClass = getattr(medmnist, info['python_class'])
-        dataset = DataClass(split='train', transform=self.base_transform(), root=self.data_path_train)
+        dataset = DataClass(split='train', transform=self.base_transform(), root=self.data_path_train,download=True)
         return dataset
 
     def ds_test(self):
         info = INFO['bloodmnist']
         DataClass = getattr(medmnist, info['python_class'])
-        dataset = DataClass(split='test', transform=self.base_transform(), root=self.data_path_test)
+        dataset = DataClass(split='test', transform=self.base_transform(), root=self.data_path_test,download=True)
         return dataset
 
 

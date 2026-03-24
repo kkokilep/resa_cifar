@@ -23,6 +23,12 @@ objective during training, outperforming state of-the-art SSL baselines and achi
 </p>
 
 
+|                        | SimCLR | VICReg | AdaDim | AdaDim+momentum | Resa  |
+|------------------------|--------|--------|--------|-----------------|-------|
+| Compute Cost (s/epoch) | 22.01  |  19.09 |  25.48 |      30.82      | 75.10 |
+
+
+
 ## Installation and Requirements
 
 1. Clone this repository and navigate to the folder
