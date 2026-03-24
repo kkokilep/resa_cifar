@@ -14,7 +14,7 @@ from src.transform import MultiVisionDataset
 from method import get_method
 from eval.evaluate import get_acc
 from eval.dataloader import get_clf
-
+import time
 from src.utils import (
     setup_logging,
     init_distributed_device,
@@ -129,6 +129,8 @@ def main():
     cudnn.benchmark = True
 
     #scaler = torch.cuda.amp.GradScaler()
+    start_time = time.perf_counter()
+
     for epoch in range(start_epoch, args.epochs):
 
         # train the network for one epoch
@@ -161,6 +163,10 @@ def main():
                 save_dict,
                 os.path.join(args.dump_path, f"checkpoint__{args.dataset}_{args.loss_type}_{args.temperature}_{args.arch}_{args.lr}_{args.crops_nmb[0]}_{args.aug_strength}_{args.gamma}.pth.tar"),
             )
+    end_time = time.perf_counter()
+
+    elapsed_time = end_time - start_time
+    print(f"The code executed in {elapsed_time:.4f} seconds")
 
 def train(loader, model, optimizer, epoch, args):
     batch_time = AverageMeter()

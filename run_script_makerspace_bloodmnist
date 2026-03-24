@@ -1,0 +1,18 @@
+#!/bin/bash
+#SBATCH --time=16:00:00
+#SBATCH --gres=gpu:h100:1
+#SBATCH --nodes=1
+#SBATCH --cpus-per-task=32
+#SBATCH --ntasks 1
+#SBATCH --ntasks-per-node=1
+#SBATCH --signal=INT@5
+
+
+
+torchrun --nproc_per_node=1 --master_port=33346 main.py --arch 'resnet50'  --dataset bloodmnist --data_path '/home/hice1/skim3513/AIFirst_F24_data/darai/medmnist/.medmnist' --data_path_test '/home/hice1/skim3513/AIFirst_F24_data/darai/medmnist/.medmnist' --workers 32 --env_name 'ResNet50_bloodmnist_1e-4_temp_0.1_embed_512_AdaDim1' --dump_path ./save_model/ --loss_type AdaDim --batch_size 256 --emb 512 --lr 0.4  --gamma 1e-4 --temperature 0.1 --epochs 400
+
+
+torchrun --nproc_per_node=1 --master_port=34347 main.py --arch 'resnet50'  --dataset bloodmnist --data_path '/home/hice1/skim3513/AIFirst_F24_data/darai/medmnist/.medmnist' --data_path_test '/home/hice1/skim3513/AIFirst_F24_data/darai/medmnist/.medmnist' --workers 32 --env_name 'ResNet50_bloodmnist_1e-4_temp_0.1_embed_512_AdaDim2' --dump_path ./save_model/ --loss_type AdaDim --batch_size 256 --emb 512 --lr 0.4  --gamma 1e-4 --temperature 0.1 --epochs 400
+
+
+torchrun --nproc_per_node=1 --master_port=35348 main.py --arch 'resnet50'  --dataset bloodmnist --data_path '/home/hice1/skim3513/AIFirst_F24_data/darai/medmnist/.medmnist' --data_path_test '/home/hice1/skim3513/AIFirst_F24_data/darai/medmnist/.medmnist' --workers 32 --env_name 'ResNet50_bloodmnist_1e-4_temp_0.1_embed_512_AdaDim3' --dump_path ./save_model/ --loss_type AdaDim --batch_size 256 --emb 512 --lr 0.4  --gamma 1e-4 --temperature 0.1 --epochs 400
